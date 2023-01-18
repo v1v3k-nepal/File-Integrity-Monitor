@@ -1,59 +1,3 @@
-Write-Host ""
-Write-Host "#############################################"
-Write-Host "Welcome to My File Integrity Monitor!!!"
-Write-Host " "
-Write-Host "Would you like to:"
-Write-Host " "
-Write-Host "(E) Use Existing Baseline And Check Live Status?"
-Write-Host "(N) Use New Baseline?"
-Write-Host "(L) Files Tampered State ?"
-Write-Host " "
-
-$UserInput= Read-Host -Prompt "Please Enter 'E', 'N' or 'T'" 
-Write-Host " "
-
-Write-Host "User Entered" ($UserInput)
-Write-Host " "
-
-
-       
-
-if ($UserInput -eq "N".ToUpper()) {
-       
-        #Calculate Hash from files, and store in Baseline.txt
-        
-       
-        Erase-Baseline-If-Already-Exists  #Calling Function to Erase Baseline
-
-        BaseLine_Update    # Calling Function to update Baseline
-
-        Write-Host "Calculating Hashes!!!!!" -ForegroundColor Green
-        Write-Host "Congrats!!! New BaseLine Has Been Created" -ForegroundColor Green
-        Write-Host " "
-
-}
-
-if ($UserInput -eq "E".ToUpper()) {
-
-        #load file-hash from baseline.txt and store them in a dictionary
-        #Begin Monitoring files with saved Baseline
-
-                Load_FileHashDictionary   #Calling Function to Load contents in FileHashDictionary
-
-        #Begin continuously Monitoring files with saved Baseline
-
-                While($true){Continuous_Monitoring}
-}
-
-
-if ($UserInput -eq "T".ToUpper()){
-
-            Load_FileHashDictionary
-            Continuous_Monitoring
-}
-
-
-
 
 Function Calculate_File_Hash($filepath){
     $filehash = Get-FileHash -PATH $filepath -Algorithm SHA512
@@ -153,3 +97,67 @@ Function Continuous_Monitoring(){
                               }
                     }
         }
+
+
+
+
+
+
+
+Write-Host ""
+Write-Host "#############################################"
+Write-Host "Welcome to My File Integrity Monitor!!!"
+Write-Host " "
+Write-Host "Would you like to:"
+Write-Host " "
+Write-Host "(E) Use Existing Baseline And Check Live Status?"
+Write-Host "(N) Use New Baseline?"
+Write-Host "(L) Files Tampered State ?"
+Write-Host " "
+
+$UserInput= Read-Host -Prompt "Please Enter 'E', 'N' or 'T'" 
+Write-Host " "
+
+Write-Host "User Entered" ($UserInput)
+Write-Host " "
+
+
+       
+
+if ($UserInput -eq "N".ToUpper()) {
+       
+        #Calculate Hash from files, and store in Baseline.txt
+        
+       
+        Erase-Baseline-If-Already-Exists  #Calling Function to Erase Baseline
+
+        BaseLine_Update    # Calling Function to update Baseline
+
+        Write-Host "Calculating Hashes!!!!!" -ForegroundColor Green
+        Write-Host "Congrats!!! New BaseLine Has Been Created" -ForegroundColor Green
+        Write-Host " "
+
+}
+
+if ($UserInput -eq "E".ToUpper()) {
+
+        #load file-hash from baseline.txt and store them in a dictionary
+        #Begin Monitoring files with saved Baseline
+
+                Load_FileHashDictionary   #Calling Function to Load contents in FileHashDictionary
+
+        #Begin continuously Monitoring files with saved Baseline
+
+                While($true){Continuous_Monitoring}
+}
+
+
+if ($UserInput -eq "T".ToUpper()){
+
+            Load_FileHashDictionary
+            Continuous_Monitoring
+}
+
+
+
+
